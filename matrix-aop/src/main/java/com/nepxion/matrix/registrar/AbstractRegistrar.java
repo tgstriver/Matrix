@@ -1,19 +1,11 @@
 package com.nepxion.matrix.registrar;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
-import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
+import com.nepxion.banner.BannerConstant;
+import com.nepxion.banner.Description;
+import com.nepxion.banner.LogoBanner;
+import com.nepxion.banner.NepxionBanner;
+import com.nepxion.matrix.constant.MatrixConstant;
+import com.taobao.text.Color;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,33 +29,24 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import com.nepxion.banner.BannerConstant;
-import com.nepxion.banner.Description;
-import com.nepxion.banner.LogoBanner;
-import com.nepxion.banner.NepxionBanner;
-import com.nepxion.matrix.constant.MatrixConstant;
-import com.taobao.text.Color;
+import java.lang.annotation.Annotation;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, BeanClassLoaderAware, EnvironmentAware {
+
     private static final Logger LOG = LoggerFactory.getLogger(AbstractRegistrar.class);
 
     static {
-        /*String bannerShown = System.getProperty(BannerConstant.BANNER_SHOWN, "true");
-        if (Boolean.valueOf(bannerShown)) {
-            System.out.println("");
-            System.out.println("╔═╗╔═╗   ╔╗");
-            System.out.println("║║╚╝║║  ╔╝╚╗");
-            System.out.println("║╔╗╔╗╠══╬╗╔╬═╦╦╗╔╗");
-            System.out.println("║║║║║║╔╗║║║║╔╬╬╬╬╝");
-            System.out.println("║║║║║║╔╗║║╚╣║║╠╬╬╗");
-            System.out.println("╚╝╚╝╚╩╝╚╝╚═╩╝╚╩╝╚╝");
-            System.out.println("Nepxion Matrix - Registrar  v" + MatrixConstant.MATRIX_VERSION);
-            System.out.println("");
-        }*/
+        LogoBanner logoBanner = new LogoBanner(AbstractRegistrar.class, "/com/nepxion/matrix/resource/logo.txt",
+                "Welcome to Nepxion", 6, 5,
+                new Color[]{Color.red, Color.green, Color.cyan, Color.blue, Color.yellow, Color.magenta}, true);
 
-        LogoBanner logoBanner = new LogoBanner(AbstractRegistrar.class, "/com/nepxion/matrix/resource/logo.txt", "Welcome to Nepxion", 6, 5, new Color[] { Color.red, Color.green, Color.cyan, Color.blue, Color.yellow, Color.magenta }, true);
-
-        NepxionBanner.show(logoBanner, new Description(BannerConstant.VERSION + ":", MatrixConstant.MATRIX_VERSION, 0, 1), new Description(BannerConstant.PLUGIN + ":", "Registrar", 0, 1), new Description(BannerConstant.GITHUB + ":", BannerConstant.NEPXION_GITHUB + "/Matrix", 0, 1));
+        NepxionBanner.show(logoBanner,
+                new Description(BannerConstant.VERSION + ":", MatrixConstant.MATRIX_VERSION, 0, 1),
+                new Description(BannerConstant.PLUGIN + ":", "Registrar", 0, 1),
+                new Description(BannerConstant.GITHUB + ":", BannerConstant.NEPXION_GITHUB + "/Matrix", 0, 1));
     }
 
     private ResourceLoader resourceLoader;
@@ -91,16 +74,16 @@ public abstract class AbstractRegistrar implements ImportBeanDefinitionRegistrar
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-        registerAnnotations(metadata, registry);
+        this.registerAnnotations(metadata, registry);
     }
 
     public void registerAnnotations(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-        ClassPathScanningCandidateComponentProvider scanner = getScanner();
+        ClassPathScanningCandidateComponentProvider scanner = this.getScanner();
         scanner.setResourceLoader(this.resourceLoader);
 
-        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(getAnnotationClass());
+        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(this.getAnnotationClass());
         scanner.addIncludeFilter(annotationTypeFilter);
-        Set<String> basePackages = getBasePackages(metadata);
+        Set<String> basePackages = this.getBasePackages(metadata);
 
         for (String basePackage : basePackages) {
             Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents(basePackage);
@@ -110,8 +93,8 @@ public abstract class AbstractRegistrar implements ImportBeanDefinitionRegistrar
                     AnnotatedBeanDefinition beanDefinition = (AnnotatedBeanDefinition) candidateComponent;
                     AnnotationMetadata annotationMetadata = beanDefinition.getMetadata();
 
-                    Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(getAnnotationClass().getCanonicalName());
-                    registerAnnotation(registry, annotationMetadata, attributes);
+                    Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(this.getAnnotationClass().getCanonicalName());
+                    this.registerAnnotation(registry, annotationMetadata, attributes);
                 }
             }
         }
@@ -120,25 +103,24 @@ public abstract class AbstractRegistrar implements ImportBeanDefinitionRegistrar
     private void registerAnnotation(BeanDefinitionRegistry registry, AnnotationMetadata annotationMetadata, Map<String, Object> attributes) {
         String className = annotationMetadata.getClassName();
 
-        LOG.info("Found annotation [{}] in {} ", getAnnotationClass().getSimpleName(), className);
+        LOG.info("Found annotation [{}] in {} ", this.getAnnotationClass().getSimpleName(), className);
 
-        BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(getBeanClass());
+        BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(this.getBeanClass());
         AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
 
-        customize(registry, annotationMetadata, attributes, definition);
+        this.customize(registry, annotationMetadata, attributes, definition);
 
         try {
             definition.addPropertyValue("interfaze", Class.forName(className));
         } catch (ClassNotFoundException e) {
             LOG.error("Get interface for name error", e);
         }
-        definition.addPropertyValue("interceptor", getInterceptor(beanDefinition.getPropertyValues()));
+
+        definition.addPropertyValue("interceptor", this.getInterceptor(beanDefinition.getPropertyValues()));
 
         definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
 
-        String alias = className;
-
-        BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className, new String[] { alias });
+        BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className, new String[]{className});
         BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
     }
 
@@ -147,38 +129,38 @@ public abstract class AbstractRegistrar implements ImportBeanDefinitionRegistrar
             @Override
             protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
                 if (beanDefinition.getMetadata().isIndependent()) {
-                    if (beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().getInterfaceNames().length == 1 && Annotation.class.getName().equals(beanDefinition.getMetadata().getInterfaceNames()[0])) {
+                    String[] interfaceNames = beanDefinition.getMetadata().getInterfaceNames();
+                    if (beanDefinition.getMetadata().isInterface() && interfaceNames.length == 1 && Annotation.class.getName().equals(interfaceNames[0])) {
                         try {
                             Class<?> target = ClassUtils.forName(beanDefinition.getMetadata().getClassName(), AbstractRegistrar.this.classLoader);
-
                             return !target.isAnnotation();
                         } catch (Exception ex) {
                             LOG.error("Could not load target class: " + beanDefinition.getMetadata().getClassName(), ex);
                         }
                     }
-
                     return true;
                 }
-
                 return false;
             }
         };
     }
 
     protected Set<String> getBasePackages(AnnotationMetadata importingClassMetadata) {
-        Map<String, Object> attributes = importingClassMetadata.getAnnotationAttributes(getEnableAnnotationClass().getCanonicalName());
-
+        Map<String, Object> attributes = importingClassMetadata.getAnnotationAttributes(this.getEnableAnnotationClass().getCanonicalName());
         Set<String> basePackages = new HashSet<>();
+
         for (String pkg : (String[]) attributes.get("value")) {
             if (StringUtils.hasText(pkg)) {
                 basePackages.add(pkg);
             }
         }
+
         for (String pkg : (String[]) attributes.get("basePackages")) {
             if (StringUtils.hasText(pkg)) {
                 basePackages.add(pkg);
             }
         }
+
         for (Class<?> clazz : (Class[]) attributes.get("basePackageClasses")) {
             basePackages.add(ClassUtils.getPackageName(clazz));
         }

@@ -1,14 +1,5 @@
 package com.nepxion.matrix.registrar.example.aop;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -17,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.nepxion.matrix.registrar.RegistrarFactoryBean;
 
 public class MyRegistrarFactoryBean extends RegistrarFactoryBean {
+
     private String name;
     private String label;
     private String description;

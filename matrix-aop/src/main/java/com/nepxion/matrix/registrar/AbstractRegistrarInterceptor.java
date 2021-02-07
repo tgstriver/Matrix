@@ -9,7 +9,7 @@ public abstract class AbstractRegistrarInterceptor extends AbstractInterceptor {
 
     protected MutablePropertyValues annotationValues;
 
-    public AbstractRegistrarInterceptor(MutablePropertyValues annotationValues) {
+    protected AbstractRegistrarInterceptor(MutablePropertyValues annotationValues) {
         this.annotationValues = annotationValues;
     }
 
@@ -18,6 +18,6 @@ public abstract class AbstractRegistrarInterceptor extends AbstractInterceptor {
     }
 
     public String getInterface(MethodInvocation invocation) {
-        return getMethod(invocation).getDeclaringClass().getCanonicalName();
+        return super.getMethod(invocation).getDeclaringClass().getCanonicalName();
     }
 }

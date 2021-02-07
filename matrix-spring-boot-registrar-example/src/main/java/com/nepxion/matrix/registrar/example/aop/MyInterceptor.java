@@ -1,30 +1,21 @@
 package com.nepxion.matrix.registrar.example.aop;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
+import com.nepxion.matrix.registrar.AbstractRegistrarInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.beans.MutablePropertyValues;
 
-import com.nepxion.matrix.registrar.AbstractRegistrarInterceptor;
-
 public class MyInterceptor extends AbstractRegistrarInterceptor {
+
     public MyInterceptor(MutablePropertyValues annotationValues) {
         super(annotationValues);
     }
 
     @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
+    public Object invoke(MethodInvocation invocation) {
         System.out.println("---------------------代理信息---------------------");
-        String interfaze = getInterface(invocation);
-        String methodName = getMethodName(invocation);
-        Object[] arguments = getArguments(invocation);
+        String interfaze = super.getInterface(invocation);
+        String methodName = super.getMethodName(invocation);
+        Object[] arguments = super.getArguments(invocation);
 
         System.out.println("Interface=" + interfaze + ", methodName=" + methodName + ", arguments=" + arguments[0]);
 

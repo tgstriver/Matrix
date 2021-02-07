@@ -20,12 +20,12 @@ Nepxion Matrix是一款集成Spring AutoProxy，Spring Registrar和Spring Import
   - Idea加"-parameters"参数：http://blog.csdn.net/royal_lr/article/details/52279993
 
 ### Spring Registrar机制
-实现象@FeignClient注解那样，只有接口没有实现类，就能实现注入和动态代理。代码参考com.nepxion.matrix.registrar，示例参考matrix-spring-boot-registrar-example
+实现像@FeignClient注解那样，只有接口没有实现类，就能实现注入和动态代理。代码参考`com.nepxion.matrix.registrar`，示例参考`matrix-spring-boot-registrar-example`
 - 如果本地只有接口并加相关的注解，那么执行对应的切面调用方式
 - 如果本地有接口(不管是否加注解)，并也有实现类，那么执行对应的实现类的逻辑
 
 ### Spring Import Selector机制
-实现象@EnableCircuitBreaker注解那样，入口加上@EnableMyAnnotation，自动初始化对应的Configuration。代码参考com.nepxion.matrix.selector，示例参考matrix-spring-boot-selector-example
+实现像@EnableCircuitBreaker注解那样，入口加上@EnableMyAnnotation，自动初始化对应的Configuration。代码参考`com.nepxion.matrix.selector`，示例参考`matrix-spring-boot-selector-example`
 - 入口加上@EnableXXX，并提供在spring.factories定义@EnableXXX和Configuration类的关联，达到通过注解的配置与否，控制对应相关上下文对象，例如Bean类的初始化与否
 - 提供在application.properties配置参数，达到上述的目的
 
@@ -33,9 +33,9 @@ Nepxion Matrix是一款集成Spring AutoProxy，Spring Registrar和Spring Import
 Matrix框架一般可以应用到如下场景中：
 
 ### Spring AutoProxy机制
-- 对于有复杂AOP使用场景的，用Matrix可以简化你的切面开发。例如：
+- 对于有复杂AOP使用场景的，用Matrix可以简化切面开发。例如：
   - 根据不同的业务逻辑，指定所有的注解由同一个或者多个拦截类来拦截；也可以指定不同的注解由不同的切面拦截类来拦截；更可以指定不同的接口和实现类，由不同的拦截类来拦截
-  - 如果注解很多，可以指定，你只关心哪些类注解，哪些方法注解，不管这些注解是你自定义的，还是系统定义的
+  - 如果注解很多，可以指定只关心哪些类注解，哪些方法注解，不管这些注解是你自定义的，还是系统定义的
 - 注解加在接口上，还是实现类上，或者没有接口的类，可以随意换
 - 扫描到一个注解后，你可以做一些处理，例如你可以把注解对应的数据存入数据库
 - 强大的注解扫描和拦截功能，在不侵入业务代码的前提下(只是需要在业务端加入一个注解而已)，你可以实现业务应用，例如API监控统计、API健康检查等

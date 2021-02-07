@@ -1,14 +1,5 @@
 package com.nepxion.matrix.registrar;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
@@ -19,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 public class RegistrarFactoryBean implements ApplicationContextAware, FactoryBean<Object>, InitializingBean, BeanClassLoaderAware {
+
     private ApplicationContext applicationContext;
     private Class<?> interfaze;
     private MethodInterceptor interceptor;
@@ -35,7 +27,7 @@ public class RegistrarFactoryBean implements ApplicationContextAware, FactoryBea
     }
 
     @Override
-    public Object getObject() throws Exception {
+    public Object getObject() {
         return proxy;
     }
 
@@ -50,7 +42,7 @@ public class RegistrarFactoryBean implements ApplicationContextAware, FactoryBea
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.addInterface(interfaze);
         proxyFactory.addAdvice(interceptor);
