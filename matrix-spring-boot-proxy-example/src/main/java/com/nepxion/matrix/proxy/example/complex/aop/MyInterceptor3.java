@@ -1,37 +1,29 @@
 package com.nepxion.matrix.proxy.example.complex.aop;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
-import java.lang.annotation.Annotation;
-
+import com.nepxion.matrix.proxy.aop.AbstractInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
 
-import com.nepxion.matrix.proxy.aop.AbstractInterceptor;
+import java.lang.annotation.Annotation;
 
 @Component("myInterceptor3")
 public class MyInterceptor3 extends AbstractInterceptor {
+
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        String proxyClassName = getProxyClassName(invocation);
-        Object[] arguments = getArguments(invocation);
-        String proxiedClassName = getProxiedClassName(invocation);
-        Class<?>[] proxiedInterfaces = getProxiedInterfaces(invocation);
-        Annotation[] classAnnotations = getProxiedClassAnnotations(invocation);
-        String methodName = getMethodName(invocation);
-        Annotation[] methodAnnotations = getMethodAnnotations(invocation);
-        String[] parameterNames = getMethodParameterNames(invocation);
+        String proxyClassName = super.getProxyClassName(invocation);
+        Object[] arguments = super.getArguments(invocation);
+        String proxiedClassName = super.getProxiedClassName(invocation);
+        Class<?>[] proxiedInterfaces = super.getProxiedInterfaces(invocation);
+        Annotation[] classAnnotations = super.getProxiedClassAnnotations(invocation);
+        String methodName = super.getMethodName(invocation);
+        Annotation[] methodAnnotations = super.getMethodAnnotations(invocation);
+        String[] parameterNames = super.getMethodParameterNames(invocation);
         String parameterAnnotationValue = null;
+
         try {
-            parameterAnnotationValue = getValueByParameterAnnotation(invocation, MyAnnotation7.class, String.class);
+            parameterAnnotationValue = super.getValueByParameterAnnotation(invocation, MyAnnotation7.class, String.class);
         } catch (Exception e) {
 
         }
@@ -64,13 +56,14 @@ public class MyInterceptor3 extends AbstractInterceptor {
         System.out.println("   parameterAnnotation[MyAnnotation7]'s value=" + parameterAnnotationValue);
 
         System.out.println("   arguments=");
-        for (int i = 0; i < arguments.length; i++) {
-            System.out.println("      " + arguments[i].toString());
+        for (Object argument : arguments) {
+            System.out.println("      " + argument.toString());
         }
+
         if (ArrayUtils.isNotEmpty(parameterNames)) {
             System.out.println("   parameterNames=");
-            for (int i = 0; i < parameterNames.length; i++) {
-                System.out.println("      " + parameterNames[i].toString());
+            for (String parameterName : parameterNames) {
+                System.out.println("      " + parameterName);
             }
         }
         System.out.println("------------------------------------------------------------------------------------------");

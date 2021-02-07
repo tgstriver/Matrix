@@ -1,23 +1,14 @@
 package com.nepxion.matrix.proxy.aop;
 
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
+import com.nepxion.matrix.proxy.mode.ProxyMode;
+import com.nepxion.matrix.proxy.mode.ScanMode;
+import org.aopalliance.intercept.MethodInterceptor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import org.aopalliance.intercept.MethodInterceptor;
-
-import com.nepxion.matrix.proxy.mode.ProxyMode;
-import com.nepxion.matrix.proxy.mode.ScanMode;
-
 public class DefaultAutoScanProxy extends AbstractAutoScanProxy {
+
     private static final long serialVersionUID = 9073263289068871774L;
 
     public DefaultAutoScanProxy() {

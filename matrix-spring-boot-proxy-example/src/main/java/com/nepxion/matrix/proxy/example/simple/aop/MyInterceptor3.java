@@ -1,4 +1,4 @@
-package com.nepxion.matrix.proxy.example.complex.aop;
+package com.nepxion.matrix.proxy.example.simple.aop;
 
 import com.nepxion.matrix.proxy.aop.AbstractInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 
-@Component("myInterceptor4")
-public class MyInterceptor4 extends AbstractInterceptor {
+@Component
+public class MyInterceptor3 extends AbstractInterceptor {
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -20,16 +20,9 @@ public class MyInterceptor4 extends AbstractInterceptor {
         String methodName = super.getMethodName(invocation);
         Annotation[] methodAnnotations = super.getMethodAnnotations(invocation);
         String[] parameterNames = super.getMethodParameterNames(invocation);
-        String parameterAnnotationValue = null;
-
-        try {
-            parameterAnnotationValue = super.getValueByParameterAnnotation(invocation, MyAnnotation7.class, String.class);
-        } catch (Exception e) {
-
-        }
 
         System.out.println("------------------------------------------------------------------------------------------");
-        System.out.println("My Interceptor 4 :");
+        System.out.println("My Interceptor 3 :");
         System.out.println("   proxyClassName=" + proxyClassName);
         System.out.println("   className=" + proxiedClassName);
         System.out.println("   classAnnotations=");
@@ -52,8 +45,6 @@ public class MyInterceptor4 extends AbstractInterceptor {
         for (Annotation methodAnnotation : methodAnnotations) {
             System.out.println("      " + methodAnnotation.toString());
         }
-
-        System.out.println("   parameterAnnotation[MyAnnotation7]'s value=" + parameterAnnotationValue);
 
         System.out.println("   arguments=");
         for (Object argument : arguments) {

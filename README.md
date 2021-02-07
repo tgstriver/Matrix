@@ -1,20 +1,13 @@
 # Nepxion Matrix
-[![Total lines](https://tokei.rs/b1/github/Nepxion/Matrix?category=lines)](https://tokei.rs/b1/github/Nepxion/Matrix?category=lines)  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?label=license)](https://github.com/Nepxion/Matrix/blob/master/LICENSE)  [![Maven Central](https://img.shields.io/maven-central/v/com.nepxion/matrix.svg?label=maven%20central)](https://search.maven.org/artifact/com.nepxion/matrix)  [![Javadocs](http://www.javadoc.io/badge/com.nepxion/matrix-aop.svg)](http://www.javadoc.io/doc/com.nepxion/matrix-aop)  [![Build Status](https://travis-ci.org/Nepxion/Matrix.svg?branch=master)](https://travis-ci.org/Nepxion/Matrix)  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0baa5e8bd30d46e6be7ef936640f64de)](https://www.codacy.com/project/HaojunRen/Matrix/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Nepxion/Matrix&amp;utm_campaign=Badge_Grade_Dashboard)  [![Stars](https://img.shields.io/github/stars/Nepxion/Matrix.svg?label=Stars&tyle=flat&logo=GitHub)](https://github.com/Nepxion/Matrix/stargazers)  [![Stars](https://gitee.com/Nepxion/Matrix/badge/star.svg)](https://gitee.com/nepxion/Matrix/stargazers)
-
 Nepxion Matrix是一款集成Spring AutoProxy，Spring Registrar和Spring Import Selector三种机制的AOP框架，具有很高的通用性、健壮性、灵活性和易用性
-
-## 请联系我
-微信、钉钉、公众号和文档
-
-![](http://nepxion.gitee.io/docs/zxing-doc/微信-1.jpg)![](http://nepxion.gitee.io/docs/zxing-doc/钉钉-1.jpg)![](http://nepxion.gitee.io/docs/zxing-doc/公众号-1.jpg)![](http://nepxion.gitee.io/docs/zxing-doc/文档-1.jpg)
 
 ## 简介
 ### Spring AutoProxy机制
-它统一封装接口（Spring）代理和类代理（CGLIB），注解无论在接口和类的头部或者方法上，都可以让业务端执行有效切面，可以轻松快速实现对接口或者类的复杂代理业务。代码参考com.nepxion.matrix.proxy，示例参考matrix-spring-boot-proxy-example
-- 实现接口走Spring代理，类走CGLIB代理
-- 实现通用代理和额外代理两种机制
-- 实现同一进程中，可以接口代理和类代理同存
-- 实现对类或者接口名上注解Annotation，方法上注解Annotation的快速扫描，并开放处理接口供业务端实现
+它统一封装接口（Spring）代理和类代理（CGLIB），注解无论在接口和类的头部或者方法上，都可以让业务端执行有效切面，可以轻松快速实现对接口或者类的复杂代理业务。代码参考`com.nepxion.matrix.proxy`，示例参考`matrix-spring-boot-proxy-example`
+- 实现了接口走Spring代理，类走CGLIB代理
+- 实现了通用代理和额外代理两种机制
+- 实现了同一进程中，可以接口代理和类代理同存
+- 实现了对类或者接口名上注解，方法上注解的快速扫描，并开放了处理接口供业务端实现
 - 实现“只扫描不代理”，“既扫描又代理”；代理模式ProxyMode，支持“只代理类或者接口名上注解”、“只代理方法上的注解”、“全部代理”三种模式；扫描模式ScanMode，支持“只扫描类或者接口名上注解”、“只扫描方法上的注解”、“全部扫描”三种模式
 - 实现“代理和扫描多个注解“
 - 实现“支持多个切面实现类Interceptor做调用拦截”  
@@ -84,15 +77,6 @@ public class MyInterceptor1 extends AbstractInterceptor {
 调用入口1，通过全局拦截器实现对类头部注解的扫描和代理，详细用法可参考示例3
 ```java
 package com.nepxion.matrix.proxy.simple.aop;
-
-/**
- * <p>Title: Nepxion Matrix</p>
- * <p>Description: Nepxion Matrix AOP</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
 
 import java.lang.annotation.Annotation;
 
@@ -230,5 +214,3 @@ public class MyAutoScanProxyForMethod extends DefaultAutoScanProxy {
 ## Spring Import Selector机制的示例
 > 参考matrix-spring-boot-selector-example
 
-## Star走势图
-[![Stargazers over time](https://starchart.cc/Nepxion/Matrix.svg)](https://starchart.cc/Nepxion/Matrix)
